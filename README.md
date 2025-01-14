@@ -44,14 +44,17 @@ En esta actividad se busca consolidar los conocimientos sobre entornos de desarr
     <img src="imagenes\Carpetas.png" alt="Config Nano">
 </p>
 2. **Configuración del entorno gráfico:**
+
    ```bash
    export DISPLAY=:0
    startxwin -- -listen tcp &
    xhost +
    ```
+
    - `export DISPLAY=:0`: Configura la pantalla para las aplicaciones gráficas.
    - `startxwin`: Inicia el servidor X para soporte gráfico.
    - `xhost +`: Permite conexiones al servidor X.
+
 <p align="center">
     <img src="imagenes\Display.png" alt="Config Nano">
 </p>
@@ -60,7 +63,8 @@ En esta actividad se busca consolidar los conocimientos sobre entornos de desarr
 Se utiliza el siguiente comando para iniciar el contenedor Docker con Eclipse:
 
 ```bash
-sudo docker run -ti --rm \
+docker run -ti --rm \
+  --ulimit nofile=8096:8096 \ #Se introduce esta línea por que sino da out of memory
   -e DISPLAY=$DISPLAY \
   -e artifactory_host='127.0.0.1:9999' \
   --name eclipse \
@@ -71,10 +75,11 @@ sudo docker run -ti --rm \
 ```
 
 <p align="center">
-    <img src="imagenes\ErrorEclipse.png" alt="Config Nano">
+    <img src="imagenes\InstalaciónE1.png" alt="Config Nano">
+    <img src="imagenes\FuncionandoE.png" alt="Config Nano">
 </p>
 
-En intentado ejecutarlo y de todas formas da error.
+Vemos como todo se ejecuta correctamente, el fallo que me daba era debido a los permisos de usuario.
 **Explicación del comando:**
 - `-ti`: Permite interactuar con el terminal del contenedor.
 - `--rm`: Elimina el contenedor al finalizar su ejecución.
@@ -133,19 +138,43 @@ Estas extensiones principalmente nos ayudarán a desarrollar un código mucho m�
         </p>
 3. **Compilación y ejecución:**
    - En mi caso ya tengo instalados tos los paths y lo unico que hay que hacer para que el código cocompile será darle al play.
+
       <p align="center">
           <img src="imagenes\run.png" alt="Config Nano">
           <img src="imagenes\funcionando.png" alt="Config Nano">
         </p>
 4. **Depuración:**
    - Usaremos SonarCube para que nos diga los diferentes errores, para hacer pruebas he decidido ejecutarlo y ver lo qwue me daba el unico falo ha sido este.
-   - A parte he decidico añadir yo un error al código en un try Except para que sea más visual la forma en la que márca que una variable no está siendo usada a lo largo del código.
-   <p align="center">
-      <img src="imagenes\SonarPy.png" alt="Config Nano">
-      <img src="imagenes\e.png" alt="Config Nano">
-   </p>
+La redacción presenta algunas inconsistencias gramaticales, ortográficas y de estilo que podrían mejorarse para que el texto sea más claro y profesional. Aquí tienes una versión revisada:
 
-   - Aqui podremos ver como nos márca el error y nos da una salida con diferentes soluciones la propia extensión.
+---
+
+- Además, he decidido añadir un error al código en un bloque `try-except` para que sea más visual la forma en la que marca que una variable no está siendo usada a lo largo del código.
+
+  <p align="center">
+     <img src="imagenes\SonarPy.png" alt="Config Nano">
+     <img src="imagenes\e.png" alt="Config Nano">
+  </p>
+
+- Aquí podemos ver cómo se señala el error y se nos ofrece una salida con diferentes soluciones proporcionadas por la propia extensión.  
+- Para finalizar esta primera práctica, vamos a corregir la línea mencionada anteriormente para dejarla correctamente en el código.  
+
+```python
+def resta(num1, num2):
+    try:
+        num1_int = int(num1)
+        num2_int = int(num2)
+        return num1_int - num2_int
+    except Exception as errorResta:
+        messagebox.showerror(f"Error: {errorResta}", "Por favor, ingrese números enteros")
+```
+
+<p align="center">
+   <img src="imagenes\ForzarFallos.png" alt="Config Nano">
+</p>
+
+- Esto que vemos aquí será útil durante el desarrollo, ya que permite identificar el tipo de error, en este caso un `ValueError`. Después de comprobar esto, el código quedó como estaba inicialmente, ya que es correcto.
+
 ---
 
 ## Conclusiones
@@ -158,5 +187,3 @@ La configuración de un entorno de desarrollo basado en contenedores con Eclipse
 Sergio Morato Prieto
 
 ---
-
-

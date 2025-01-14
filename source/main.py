@@ -14,8 +14,8 @@ def resta(num1, num2):
         num1_int = int(num1)
         num2_int = int(num2)
         return num1_int - num2_int
-    except Exception as e:
-        messagebox.showerror("Error", "Por favor, ingrese números enteros")
+    except Exception as errorResta:
+        messagebox.showerror(f"Error:{errorResta}", "Por favor, ingrese números enteros")
 
 def multiplicacion(num1, num2):
     try:
